@@ -37,3 +37,10 @@ Datetimes are parsed as local wall-clock strings with no timezone offset; `"2024
 - `formatMinutes(minutes)` — render an integer minute count as `H:MM`.
 
 Options for `calculateWorkedTime`: `roundToMinutes` (positive integer, default `1`) and `overtimeAfterMinutes` (non-negative integer, default `0`, meaning disabled).
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
